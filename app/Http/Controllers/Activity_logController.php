@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 Use App\Activity_log;
 Use App\Models\User;
-Use Response;
+Use Response; 
 
 
 class Activity_logController extends Controller {
