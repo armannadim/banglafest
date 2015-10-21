@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Festival;
+use App\Models\Festival;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
+use \App\Models\FestivalActivities;
 use View;
 use Auth;
+use DB;
 
 class FestivalController extends Controller {
 
@@ -69,6 +71,8 @@ class FestivalController extends Controller {
         $data = Request::all();
 
         $s = new Festival();
+
+
         $s->name = $data['name'];
         $s->start_datetime = date("Y-m-d H:i:s", strtotime($data['start_datetime']));
         $s->end_datetime = date("Y-m-d H:i:s", strtotime($data['end_datetime']));
@@ -94,7 +98,7 @@ class FestivalController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function show($id, $arrayResp) {
+    public function show($id, $arrayResp = false) {
         try {
 
             $response = [];
@@ -103,6 +107,7 @@ class FestivalController extends Controller {
             $festival = Festival::find($id);
 
             $response = [
+                'id' => $festival->id,
                 'name' => $festival->name,
                 'start_datetime' => date(DATE_ISO8601, strtotime($festival->start_datetime)),
                 'end_datetime' => date(DATE_ISO8601, strtotime($festival->end_datetime)),
@@ -160,14 +165,75 @@ class FestivalController extends Controller {
      */
     public function update($id) {
         $response = [];
-        if (Festival::where('id', '=', $id)->update(Input::all())) {
-            $response["result"] = "Updated";
-            $statusCode = 200;
-        } else {
-            $statusCode = 422;
-            $response["result"] = "Not updated";
+        $data = Request::all();
+
+        $update = [];
+        if (isset($data['tab'])) {
+            if ($data['tab'] == "festival") {
+                $fest = Festival::find($id);
+
+                $fest->name = $data['name'];
+                $fest->start_datetime = date("Y-m-d H:i:s", strtotime($data['start_datetime']));
+                $fest->end_datetime = date("Y-m-d H:i:s", strtotime($data['end_datetime']));
+                $fest->city = isset($data['city']) ? trim(explode(',', $data['city'])[0]) : "";
+                $fest->country_id = isset($data['city']) ? BackendController::getCountryID(trim(last(explode(',', $data['city'])))) : "";
+                $fest->venue = isset($data['venue']) ? $data['venue'] : "";
+                $fest->description = isset($data['description']) ? $data['description'] : "";
+                $fest->link = isset($data['link']) ? $data['link'] : "";
+                $fest->facebook = isset($data['facebook']) ? $data['facebook'] : "";
+                $fest->twitter = isset($data['twitter']) ? $data['twitter'] : "";
+                $fest->budget = isset($data['budget']) ? $data['budget'] : "";
+                if ($fest->save()) {
+                    $statusCode = 200;
+                } else {
+                    $statusCode = 422;
+                }
+                return Response::json($fest, $statusCode);
+            }
+            if ($data['tab'] == "organizer") {
+                $fest = Festival::find($id);
+                DB::table('fest_asso')->where('id_festival', '=', $id)->delete();
+                foreach ($data['organizers'] as $org) {
+
+                    $fest->Association()->attach($org);
+                }
+                return Response::json($fest, "200");
+            }
+            if ($data['tab'] == "person") {
+                $fest = Festival::find($id);
+                DB::table('fest_person')->where('id_festival', '=', $id)->delete();
+                foreach ($data['person'] as $per) {
+
+                    $fest->Person()->attach($per);
+                }
+                return Response::json($fest, "200");
+            }
+
+            if ($data['tab'] == "guest") {
+                $fest = Festival::find($id);
+                DB::table('fest_guest')->where('id_festival', '=', $id)->delete();
+                foreach ($data['guests'] as $guest) {
+
+                    $fest->Guest()->attach($guest);
+                }
+                return Response::json($fest, "200");
+            }
+            if ($data['tab'] == "performer") {
+                $fest = Festival::find($id);
+                DB::table('fest_perf')->where('id_festival', '=', $id)->delete();
+                foreach ($data['performer'] as $perf) {
+
+                    $fest->Performer()->attach($perf);
+                }
+                return Response::json($fest, "200");
+            }
+            if ($data['tab'] == "multimedia") {
+                
+            }
         }
-        return Response::json($response, $statusCode);
+
+
+        //return Response::json($response, $statusCode);
     }
 
     /**

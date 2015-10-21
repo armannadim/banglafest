@@ -16,13 +16,18 @@ namespace App\Http\Controllers;
  */
 use App\Models\Country;
 use App\Models\City;
-use App\Models\Associations;
+use App\Models\Association;
+use App\Models\Person;
+use App\Models\Guest;
+use App\Models\Performer;
 use Response;
+use Request;
 use Input;
 use Auth;
 use Redirect;
 use Validator;
 use App\Models\User;
+use DB;
 
 class BackendController extends Controller {
 
@@ -270,17 +275,23 @@ class BackendController extends Controller {
         }
     }
 
-    public function getUser($city = null) {
-        
-    }
-
     public function getAssociation($asso = null) {
         try {
             $response = [];
             $statusCode = 200;
             //$city = City::all();
-            $asso = Associations::where('name', 'like', '%' . $asso . '%')->get();
+            $id = null;
+            if (!is_numeric($asso)) {
+                $asso = Association::where('name', 'like', '%' . $asso . '%');
+            } else {
+                $id = Request::segment(2);
+            }
 
+            if ($id != null) {
+                $asso = Association::where('country_id', 'like', $this->getCountryIdOfFestival($id));
+            }
+
+            $asso = $asso->get();
             foreach ($asso as $a) {
                 $response[] = [
                     'id' => $a->id,
@@ -294,8 +305,87 @@ class BackendController extends Controller {
         }
     }
 
-    public static function getCountryId($country){
+    public static function getCountryIdOfFestival($id) {
+        return DB::table('festival')
+                        ->where('id', '=', $id)
+                        ->pluck('country_id');
+    }
+
+    public static function getCountryId($country) {
         $id = Country::where('country_name', 'like', $country)->firstOrFail();
         return $id['id'];
+    }
+
+    public function getPerson($id = null) {
+        try {
+            $response = [];
+            $statusCode = 200;
+            //$city = City::all();
+            
+            $id = Request::segment(2);
+
+
+            if ($id != null) {
+                $id = Person::where('country_id', 'like', $this->getCountryIdOfFestival($id));
+            }
+
+            $id = $id->get();
+            foreach ($id as $a) {
+                $response[] = [
+                    'id' => $a->id,
+                    'value' => $a->first_name . ' ' . $a->last_name . ', ' . $a->name . ' (' . $a->city . ')'
+                ];
+            }
+        } catch (Exception $e) {
+            $statusCode = 404;
+        } finally {
+            return Response::json($response, $statusCode);
+        }
+    }
+    
+    public function getGuest() {
+        try {
+            $response = [];
+            $statusCode = 200;
+            $guest = Guest::all();
+            
+            
+            
+            foreach ($guest as $a) {
+                $response[] = [
+                    'id' => $a->id,
+                    'value' => $a->name . ' (' . $a->description . ')'
+                ];
+            }
+        } catch (Exception $e) {
+            $statusCode = 404;
+        } finally {
+            return Response::json($response, $statusCode);
+        }
+    }
+    
+    public function getPerformer() {
+        try {
+            $response = [];
+            $statusCode = 200;
+            $performer = Performer::all();
+            
+            
+            
+            foreach ($performer as $a) {
+                $response[] = [
+                    'id' => $a->id,
+                    'value' => $a->name . ' (' . $a->description . ')'
+                ];
+            }
+        } catch (Exception $e) {
+            $statusCode = 404;
+        } finally {
+            return Response::json($response, $statusCode);
+        }
+    }
+
+    public function RemoveSchedule($id_activity){
+        \App\Models\FestivalActivities::where("id_activity", "=", $id_activity)->delete();
     }
 }

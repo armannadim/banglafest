@@ -101,16 +101,19 @@
 
                     <!-- Events Single Gallery Thumbs
                     ============================================= -->
-                    <div class="masonry-thumbs col-4" data-lightbox="gallery" ng-if="event.photos.length > 0">
-                        <a ng-repeat="photo in event.photos" href="[[photo.filename]]" data-lightbox="gallery-item">
-                            <img class="image_fade" src="[[photo.thumb]]" alt="Gallery Thumb 1"> 
-                        </a>                        
+                    <div class="masonry-thumbs col-4" data-lightbox="gallery">
+                        <a data-lightbox="gallery-item" ng-repeat="photo in event.photos" href="[[photo.filename]]" >
+                            <img class="image_fade" src="[[photo.thumb]]" alt="[[photo.filename]]"> 
+                        </a>                                                
                     </div>
-                    <div class="masonry-thumbs col-4" data-lightbox="gallery" ng-if="event.photos.length <= 0">
+
+                    <div class="col-4" ng-if="event.photos.length <= 0">
                         <h5>No photos/videos available.</h5>
                     </div><!-- Event Single Gallery Thumbs End -->
 
                 </div>
+
+
 
                 <div class="col_three_fifth nobottommargin col_last">
 

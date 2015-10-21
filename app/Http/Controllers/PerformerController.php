@@ -57,12 +57,11 @@ class PerformerController extends Controller {
         $newData->name = $data['name'];
         $newData->description = $data['description'];              
         if ($newData->save()) {
-            $statusCode = 200;
-            return Response::json($newData, $statusCode);
+            $statusCode = 200;            
         } else {
-            $statusCode = 422;
-            return Response::json($newData, $statusCode);
+            $statusCode = 422;            
         }
+        return Response::json($newData, $statusCode);
     }
 
     /**

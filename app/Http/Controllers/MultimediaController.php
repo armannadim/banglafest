@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Input;
-use App\Multimedia;
-use App\Festival;
+use App\Models\Multimedia;
+use App\Models\Festival;
+use App\Models\User;
 use View;
 use Response;
+use Request;
+use Auth;
 
 class MultimediaController extends Controller {
 
@@ -59,16 +62,94 @@ class MultimediaController extends Controller {
      * @return Response
      */
     public function store() {
-        $s = Multimedia::create(Input::all());
+        $data = Request::all();
+        $statusCode = 422;
+        $path_to_image_directory = 'images/events/' . $data['festival_id'] . '/fullsized/';
+        $path_to_thumbs_directory = 'images/events/' . $data['festival_id'] . '/thumbs/';
+        $newData = new Multimedia();
+        $newData->user_id = Auth::user()->id;
 
-        if ($s->isSaved()) {
-            return Redirect::route('multimedia.index')
-                            ->with('flash', 'The new user has been created');
+        $response = [
+            'files' => []
+        ];
+        if (isset($_FILES['files'])) {
+
+            if (preg_match('/[.](jpg)|(gif)|(png)|(JPG)|(GIF)|(PNG)$/', $_FILES['files']['name'][0])) {
+
+                $filename = $_FILES['files']['name'][0];
+                $source = $_FILES['files']['tmp_name'][0];
+                $target = $path_to_image_directory . $filename;
+                if (!file_exists($path_to_image_directory)) {
+                    mkdir($path_to_image_directory, 0777, true);
+                }
+                move_uploaded_file($source, $target);
+
+                $thumbFile = $this->createThumbnail($filename, $path_to_image_directory, $path_to_thumbs_directory);
+
+                $newData->festival_id = isset($data['festival_id']) ? $data['festival_id'] : "";
+                $newData->file_type = $_FILES['files']['type'][0];
+                $newData->filename = asset($target);
+                $newData->thumb = asset($thumbFile);
+                $newData->poster = isset($data['poster']) ? "1" : "0";
+
+                if ($newData->save()) {
+                    $response['files'][] = [
+                    'name' => $filename,
+                    'filetype' => $_FILES['files']['type'][0],
+                    "url" => asset($target),
+                    "thumbnailUrl"=> asset($thumbFile)                 
+                    ];
+                    $statusCode = 200;
+                } else {
+                    $response['files'][] = [
+                        'name' => $filename,
+                        'error' => 'File is not uploaded.',
+                    ];
+                    $statusCode = 422;
+                }
+            }
         }
 
-        return Redirect::route('multimedia.create')
-                        ->withInput()
-                        ->withErrors($s->errors());
+
+        return Response::json($response, $statusCode);
+    }
+
+    function createThumbnail($filename, $path_to_image_directory, $path_to_thumbs_directory) {
+
+        $final_width_of_image = 100;
+
+        if (!file_exists($path_to_thumbs_directory)) {
+            mkdir($path_to_thumbs_directory, 0777, true);
+        }
+        if (preg_match('/[.](jpg)|(JPG)$/', $filename)) {
+            $im = imagecreatefromjpeg($path_to_image_directory . $filename);
+        } else if (preg_match('/[.](gif)|(GIF)$/', $filename)) {
+            $im = imagecreatefromgif($path_to_image_directory . $filename);
+        } else if (preg_match('/[.](png)|(PNG)$/', $filename)) {
+            $im = imagecreatefrompng($path_to_image_directory . $filename);
+        }
+
+        $ox = imagesx($im);
+        $oy = imagesy($im);
+
+        $nx = $final_width_of_image;
+        $ny = floor($oy * ($final_width_of_image / $ox));
+
+        $nm = imagecreatetruecolor($nx, $ny);
+
+        imagecopyresized($nm, $im, 0, 0, 0, 0, $nx, $ny, $ox, $oy);
+
+        if (!file_exists($path_to_thumbs_directory)) {
+            if (!mkdir($path_to_thumbs_directory)) {
+                die("There was a problem. Please try again!");
+            }
+        }
+
+        imagejpeg($nm, $path_to_thumbs_directory . $filename);
+        /* $tn = '<img src="' . $path_to_thumbs_directory . $filename . '" alt="image" />';
+          $tn .= '<br />Congratulations. Your file has been successfully uploaded, and a      thumbnail has been created.';
+          echo $tn; */
+        return $path_to_thumbs_directory . $filename;
     }
 
     /**
@@ -117,18 +198,13 @@ class MultimediaController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        $m = Multimedia::find($id);
-        $mm = Multimedia::where('id', $id)->delete();
+        
+        $m = Multimedia::find($id)->delete();
+        
 
         $response = [];
-        $response["filename"] = $user->filename;
-        if ($mm->trashed()) {
-            $statusCode = 200;
-            $response['result'] = "deleted";
-        } else {
-            $statusCode = 422;
-            $response['result'] = "Cannot delete.";
-        }
+        $response["filename"] = $m['filename'];
+        $statusCode = 200;
         return Response::json($response, $statusCode);
     }
 

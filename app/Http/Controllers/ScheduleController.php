@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Association;
+use App\Models\FestivalActivities;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 
-class AssociationController extends Controller {
+class ScheduleController extends Controller {
 
     /**
      * Display a listing of the resource.
@@ -17,28 +17,26 @@ class AssociationController extends Controller {
         try {
 
             $response = [
-                'association' => []
+                'schedule' => []
             ];
             $statusCode = 200;
-            $data = Association::all();
+            $data = Performer::all();
             //$users = User::all()->take(9);
 
             foreach ($data as $d) {
-                $response['association'][] = [
+                $response['schedule'][] = [
                     'id' => $d->id,
-                    'name' => $d->name,
-                    'address' => $d->start_datetime,
-                    'city' => $d->end_datetime,
-                    'country' => $d->Country()->country_name,
-                    'created_at' => $d->created_at,
-                    'updated_at' => $d->updated_at,
-                    'deleted_at' => $d->deleted_at,
+                    'events' => $d->events,
+                    'start_time' => $d->start_time,
+                    'end_time' => $d->start_time,
+                    'location' => $d->end_time,
+                    'festival_id' => $d->festival_id
                 ];
             }
         } catch (Exception $e) {
             $statusCode = 404;
         } finally {
-            return Response::json($response['association'], $statusCode);
+            return Response::json($response['schedule'], $statusCode);
         }
     }
 
@@ -58,17 +56,19 @@ class AssociationController extends Controller {
      */
     public function store() {
         $data = Request::all();
-        $ass = new Association();
-        $ass->name = $data['name'];
-        $ass->address = $data['address'];
-        $ass->city = isset($data['city']) ? trim(explode(',', $data['city'])[0]) : "";        
-        $ass->country_id = isset($data['city']) ? BackendController::getCountryID(trim(last(explode(',', $data['city'])))) : "";
-        if($ass->save()){
-            $statusCode = 200;            
-        }else{
+        $festActi = new FestivalActivities();
+        $festActi->events = $data['events'];
+        $festActi->start_time = date("Y-m-d H:i:s", strtotime($data['start_datetime']));
+        $festActi->end_time = date("Y-m-d H:i:s", strtotime($data['end_datetime']));
+        $festActi->location = $data['location'];
+        $festActi->festival_id = $data['festival_id'];
+
+        if ($festActi->save()) {
+            $statusCode = 200;
+        } else {
             $statusCode = 422;
         }
-        return $ass;
+        return Response::json($festActi, $statusCode);
     }
 
     /**
@@ -81,26 +81,24 @@ class AssociationController extends Controller {
         try {
 
             $response = [
-                'association' => []
+                'schedule' => []
             ];
             $statusCode = 200;
 
-            $data = Association::find($id);
+            $data = FestivalActivities::findOrFail($id);
 
-            $response['association'][] = [
+            $response['schedule'][] = [
                 'id' => $data->id,
-                'name' => $data->name,
-                'address' => $data->address,
-                'city' => $data->city,
-                'country' => $data->Country()->country_name,
-                'created_at' => $data->created_at,
-                'updated_at' => $data->updated_at,
-                'deleted_at' => $data->deleted_at,
+                'start_time' => $data->start_time,
+                'end_time' => $data->end_time,
+                'events' => $data->events,
+                'location' => $data->location,
+                'festival_id' => $data->festival_id
             ];
         } catch (Exception $e) {
             $statusCode = 404;
         } finally {
-            return Response::json($response['association'], $statusCode);
+            return Response::json($response['schedule'], $statusCode);
         }
     }
 
@@ -111,7 +109,7 @@ class AssociationController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        return View::make('association.edit');
+        
     }
 
     /**
@@ -122,7 +120,7 @@ class AssociationController extends Controller {
      */
     public function update($id) {
         $response = [];
-        if (Association::where('id', '=', $id)->update(Input::all())) {
+        if (FestivalActivities::where('id_activity', '=', $id)->update(Input::all())) {
             $response["result"] = "Updated";
             $statusCode = 200;
         } else {
@@ -139,15 +137,14 @@ class AssociationController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        
-        Association::find($id)->Festival()->detach();
-        Association::find($id)->Person()->detach();
-        
-        $ass = Association::find($id);
-        $a = Association::where('id', $id)->delete();        
+
+        FestivalActivities::find($id)->Festival()->detach();
+
+        $schedule = FestivalActivities::find($id);
+        $a = FestivalActivities::where('id', $id)->delete();
 
         $response = [];
-        $response["name"] = $ass->name;
+        $response["events"] = $schedule->name;
         if ($a > trashed()) {
             $statusCode = 200;
             $response['result'] = "deleted";

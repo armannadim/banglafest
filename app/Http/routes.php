@@ -49,6 +49,7 @@ Route::group(array('prefix' => 'api/v1'), function() {
     Route::resource('association', 'AssociationController');
     Route::resource('guest', 'GuestController');
     Route::resource('performer', 'PerformerController');
+    Route::resource('schedule', 'ScheduleController');
     Route::get('collab', array('as' => 'collab', 'uses' => 'CollaboratorController@index'));
     //Route::resource('collab', 'CollaboratorController');
 });
@@ -69,12 +70,14 @@ Route::group(array('prefix' => 'api/v1'), function() {
   Route::post('mm_delete', array('as' => 'mm_delete', 'uses' => 'MultimediaController@delete')); */
 /* END Multimedia */
 /* Person */
+/*
 Route::get('person', array('as' => 'person', 'uses' => 'PersonController@index'));
 Route::get('p_create', array('as' => 'p_create', 'uses' => 'PersonController@create'));
 Route::post('p_store', array('as' => 'p_store', 'uses' => 'PersonController@store'));
 Route::get('p_edit', array('as' => 'p_edit', 'uses' => 'PersonController@edit'));
 Route::post('p_update', array('as' => 'p_update', 'uses' => 'PersonController@update'));
 Route::post('p_delete', array('as' => 'p_delete', 'uses' => 'PersonController@delete'));
+*/
 /* END Multimedia */
 /* User */
 Route::get('user', array('as' => 'user', 'uses' => 'UserController@index'));
@@ -90,7 +93,7 @@ Route::post('u_delete', array('as' => 'u_delete', 'uses' => 'UserController@dele
 /* BACKEND CONTROLLER */
 
 Route::controllers([
-   'password' => 'Auth\PasswordController',
+    'password' => 'Auth\PasswordController',
 ]);
 
 Route::get('admin/login', array('as' => 'login', 'uses' => 'BackendController@login'));
@@ -99,7 +102,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function() {
 
     Route::get('out', array('as' => 'out', 'uses' => 'BackendController@getLogout'));
     Route::get('/', array('as' => '/', 'uses' => 'BackendController@index'));
-    
+
     // EMAIL
     Route::get('sendmail', array('as' => 'sendmail', 'uses' => 'BackendController@getComposeMail'));
     Route::get('inbox', array('as' => 'inbox', 'uses' => 'BackendController@getInbox'));
@@ -120,15 +123,36 @@ Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function() {
     Route::post('mm_update', array('as' => 'mm_update', 'uses' => 'MultimediaController@update'));
     Route::post('mm_delete', array('as' => 'mm_delete', 'uses' => 'MultimediaController@delete'));
     /* END Multimedia */
+
+    /* Associations */
+    Route::get('association', array('as' => 'association', 'uses' => 'BackendController@ass_index'));
+    Route::get('ass_create', array('as' => 'ass_create', 'uses' => 'BackendController@ass_create'));
+    Route::post('ass_store', array('as' => 'ass_store', 'uses' => 'AssociationController@store'));
+    Route::get('ass_edit', array('as' => 'ass_edit', 'uses' => 'AssociationController@edit'));
+    Route::post('ass_update', array('as' => 'ass_update', 'uses' => 'AssociationController@update'));
+    Route::post('ass_delete', array('as' => 'ass_delete', 'uses' => 'AssociationController@delete'));
+    /* END Associations */
+
+    /* Person */
+    Route::get('person', array('as' => 'person', 'uses' => 'PersonController@index'));
+    Route::get('p_create', array('as' => 'p_create', 'uses' => 'PersonController@create'));
+    Route::post('p_store', array('as' => 'p_store', 'uses' => 'PersonController@store'));
+    Route::get('p_edit', array('as' => 'p_edit', 'uses' => 'PersonController@edit'));
+    Route::post('p_update', array('as' => 'p_update', 'uses' => 'PersonController@update'));
+    Route::post('p_delete', array('as' => 'p_delete', 'uses' => 'PersonController@delete'));
+    /* END Multimedia */
+    
+    Route::post("remove_schedule/{id_activity}", array("as" => "remove_schedule", 'uses' => "BackendController@RemoveSchedule"));
 });
 
 
 Route::get('getCountry', array('as' => 'getCountry', 'uses' => 'BackendController@getCountry'));
 Route::get('getCity/{country}', array('as' => 'getCity', 'uses' => 'BackendController@getCity'));
-Route::get('getAssociation', array('as' => 'getAssociation', 'uses' => 'BackendController@getAssociation'));
+Route::get('getAssociation/{id}', array('as' => 'getAssociation', 'uses' => 'BackendController@getAssociation'));
+Route::get('getPerson/{id}', array('as' => 'getPerson', 'uses' => 'BackendController@getPerson'));
+Route::get('getGuest/{id}', array('as' => 'getGuest', 'uses' => 'BackendController@getGuest'));
+Route::get('getPerformer/{id}', array('as' => 'getPerformer', 'uses' => 'BackendController@getPerformer'));
 
 
 
-Route::post('ass_store', array('as' => 'ass_store', 'uses' => 'AssociationController@store'));
-Route::post('g_store', array('as' => 'g_store', 'uses' => 'GuestController@store'));
-Route::post('perf_store', array('as' => 'perf_store', 'uses' => 'PerformerController@store'));
+

@@ -11,7 +11,7 @@
 <!-- END PAGE LEVEL PLUGIN STYLES -->
 <!-- BEGIN PAGE STYLES -->
 {!! HTML::style('assets/admin/pages/css/tasks.css') !!}
-
+{!! HTML::style('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') !!}
 
 <!-- BEGIN REGISTER FESTIVAL PAGE -->
 @if(Route::getCurrentRoute()->getPath()=='admin/f_create')
@@ -29,6 +29,12 @@
 {!! HTML::style('assets/admin/layout3/css/themes/default.css') !!}
 {!! HTML::style('assets/admin/layout3/css/custom.css') !!}
 <!-- END THEME STYLES -->
+
+
+
+{!! HTML::style('assets/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css') !!}
+{!! HTML::style('assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css') !!}
+{!! HTML::style('assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css') !!}
 <link rel="shortcut icon" href="favicon.ico">
 
 

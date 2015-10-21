@@ -290,7 +290,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    {!! Form::open(array('route' => 'g_store', 'method' => 'POST', 'class'=>'form-horizontal ', 'id'=>'submit_guest_form')) !!}                        
+                    {!! Form::open(array('route' => 'api.v1.guest.store', 'method' => 'POST', 'class'=>'form-horizontal ', 'id'=>'submit_guest_form')) !!}                        
                     <div class="col-md-12">
                         <div class="form-group">
                             {!! Form::label('name', 'Guest', array('class' => 'col-md-3 control-label')) !!}
@@ -339,7 +339,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    {!! Form::open(array('route' => 'perf_store', 'method' => 'POST', 'class'=>'form-horizontal ', 'id'=>'submit_performers_form')) !!}                        
+                    {!! Form::open(array('route' => 'api.v1.performer.store', 'method' => 'POST', 'class'=>'form-horizontal ', 'id'=>'submit_performers_form')) !!}                        
                     <div class="col-md-12">
                         <div class="form-group">
                             {!! Form::label('name', 'Performer', array('class' => 'col-md-3 control-label')) !!}

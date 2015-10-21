@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
+use Auth;
 
 class PersonController extends Controller {
 
@@ -72,30 +73,33 @@ class PersonController extends Controller {
     public function store() {
         $data = Request::all();
         $newData = new Person();
-        $newData->first_name = $data['first_name'];
-        $newData->last_name = $data['last_name'];
-        $newData->name = $data['name'];
-        $newData->position = $data['position'];
+        $newData->first_name = isset($data['first_name'])? $data['first_name']:"";;
+        $newData->last_name = isset($data['last_name'])? $data['last_name']:"";;
+        $newData->name = isset($data['name'])? $data['name']:"";;
+        $newData->position = isset($data['position'])? $data['position']:"";
         $newData->address = $data['address'];
-        $newData->city = $data['city'];
-        $newData->country_id = $data['country_id'];
+        $newData->city = isset($data['city']) ? trim(explode(',', $data['city'])[0]) : "";        
+        $newData->country_id = isset($data['city']) ? BackendController::getCountryID(trim(last(explode(',', $data['city'])))) : "";
         $newData->contact_number = $data['contact_number'];
         $newData->email = $data['email'];
-        $newData->status = $data['status'];
-        $newData->short_text = $data['short_text'];
-        $newData->pic = $data['pic'];
-        $newData->facebook = $data['facebook'];
-        $newData->twitter = $data['twitter'];
-        $newData->gplus = $data['gplus'];        
-        $newData->created_by_users_id = $data['created_by_users_id'];
+        $newData->status = isset($data['status'])? $data['status']:"" ;
+        $newData->short_text = isset($data['short_text'])? $data['status']:"";
+        
+        $newData->pic = isset($data['pic'])? $data['pic']:"";
+        
+        $newData->facebook = isset($data['facebook'])? $data['facebook']:"";
+        $newData->twitter = isset($data['twitter'])? $data['twitter']:"";
+        $newData->gplus = isset($data['gplus'])? $data['gplus']:"";        
+        $newData->created_by_users_id = Auth::id();
 
         if ($newData->save()) {
             $statusCode = 200;
-            return Response::json($newData, $statusCode);
+            //return Response::json($newData, $statusCode);
         } else {
             $statusCode = 422;
-            return Response::json($newData, $statusCode);
+            //return Response::json($newData, $statusCode);
         }
+        return $newData;
     }
 
     /**

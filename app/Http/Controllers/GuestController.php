@@ -58,12 +58,11 @@ class GuestController extends Controller {
         $newData->description = $data['description'];
         
         if ($newData->save()) {
-            $statusCode = 200;
-            return Response::json($newData, $statusCode);
+            $statusCode = 200;            
         } else {
-            $statusCode = 422;
-            return Response::json($newData, $statusCode);
+            $statusCode = 422;            
         }
+        return Response::json($newData, $statusCode);
     }
 
     /**
@@ -82,10 +81,10 @@ class GuestController extends Controller {
 
             $data = Guest::find($id);
 
-            $response['association'][] = [
-                'id' => $data->id,
-                'name' => $data->name,
-                'description' => $data->description
+            $response['guest'][] = [
+                'id' => isset($data->id)?$data->id : "",
+                'name' => isset($data->name)?$data->name : "",
+                'description' => isset($data->description)?$data->description : ""
             ];
         } catch (Exception $e) {
             $statusCode = 404;
