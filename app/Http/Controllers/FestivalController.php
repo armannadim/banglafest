@@ -192,7 +192,7 @@ class FestivalController extends Controller {
             }
             if ($data['tab'] == "organizer") {
                 $fest = Festival::find($id);
-                DB::table('fest_asso')->where('id_festival', '=', $id)->delete();
+                $fest->Association()->detach();
                 foreach ($data['organizers'] as $org) {
 
                     $fest->Association()->attach($org);
@@ -201,7 +201,7 @@ class FestivalController extends Controller {
             }
             if ($data['tab'] == "person") {
                 $fest = Festival::find($id);
-                DB::table('fest_person')->where('id_festival', '=', $id)->delete();
+                $fest->Person()->detach();
                 foreach ($data['person'] as $per) {
 
                     $fest->Person()->attach($per);
@@ -211,7 +211,7 @@ class FestivalController extends Controller {
 
             if ($data['tab'] == "guest") {
                 $fest = Festival::find($id);
-                DB::table('fest_guest')->where('id_festival', '=', $id)->delete();
+                $fest->Guest()->detach();
                 foreach ($data['guests'] as $guest) {
 
                     $fest->Guest()->attach($guest);
@@ -220,7 +220,7 @@ class FestivalController extends Controller {
             }
             if ($data['tab'] == "performer") {
                 $fest = Festival::find($id);
-                DB::table('fest_perf')->where('id_festival', '=', $id)->delete();
+                $fest->Performer()->detach();
                 foreach ($data['performer'] as $perf) {
 
                     $fest->Performer()->attach($perf);
@@ -228,7 +228,24 @@ class FestivalController extends Controller {
                 return Response::json($fest, "200");
             }
             if ($data['tab'] == "multimedia") {
-                
+                if($data['old_poster'] !== $data['poster']){
+                    $mm = \App\Models\Multimedia::find($data['old_poster']);
+                    $mm->poster = "0";
+                    $mm->save();
+                    $mm = \App\Models\Multimedia::find($data['poster']);
+                    $mm->poster = "1";
+                    $mm->save();                    
+                }
+                if($data['old_cover'] !== $data['cover']){
+                    $mm = \App\Models\Multimedia::find($data['old_cover']);
+                    $mm->poster = "0";
+                    $mm->save();
+                    $mm = \App\Models\Multimedia::find($data['cover']);
+                    $mm->poster = "2";
+                    $mm->save();
+                }       
+                $response = ['result'=> "success"];
+                return Response::json($response, "200");
             }
         }
 

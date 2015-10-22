@@ -193,10 +193,7 @@
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-md-offset-3 col-md-9">  
-                                            {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
-                                            <a href="javascript:;" class="btn green button-submit">
-                                                Submit <i class="m-icon-swapright m-icon-white"></i>
-                                            </a>
+                                            {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}                                            
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +226,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-md-2">  
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
 
                                                     </div>
                                                 </div>
@@ -288,7 +285,7 @@
                                                             Write name of the city </span>
                                                     </td>
                                                     <td style="vertical-align: top;">
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -326,7 +323,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -368,7 +365,7 @@
                                             {!! Form::text('contact_number', '', array('class'=>'form-control', 'placeholder'=>'Contact Number')) !!}
                                         </div>
                                         <br>
-                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}                                        
+                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                         {!! Form::close() !!}
                                     </div>
                                 </div>
@@ -399,7 +396,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -449,7 +446,7 @@
                                                             Description of the guest. Ex. President of some association. </span>
                                                     </td>
                                                     <td style="vertical-align: top;">
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -483,7 +480,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -533,7 +530,7 @@
                                                             Description of the guest. Dancer, singer, group or association etc. </span>
                                                     </td>
                                                     <td style="vertical-align: top;">
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -573,10 +570,10 @@
                                                                         Events
                                                                     </td>
                                                                     <td>
-                                                                        
+
                                                                     </td>
                                                                 </tr>
-                                                                 @foreach($data['events'] as $event)
+                                                                @foreach($data['events'] as $event)
                                                                 <tr>
                                                                     <td>
                                                                         {!! date("d/m/Y", strtotime($event->start_time)) !!}
@@ -605,7 +602,7 @@
                                                             <i class="fa fa-plus"></i>
                                                         </a>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -684,7 +681,7 @@
                                                             Write the activity. </span>
                                                     </td>
                                                     <td style="vertical-align: top;">
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -761,7 +758,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        {!! Form::submit('Submit', array('class'=>'btn green button-submit')) !!}
+                                                        {!! Form::button('Submit <i class="m-icon-swapright m-icon-white"></i>', array('class'=>'btn green button-submit', 'type'=>'submit')) !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -1281,7 +1278,7 @@
                 {
                     alert("Festival data updated.");
                     location.reload(true);
-                    
+
                 },
                 error: function()
                 {
