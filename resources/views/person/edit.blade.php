@@ -15,7 +15,7 @@
                 <a href="{!! route('person') !!}">User Management</a><i class="fa fa-circle"></i>
             </li>
             <li class="active">
-                Dashboard
+                Edit user
             </li>
         </ul>
         <!-- END PAGE BREADCRUMB -->
@@ -31,14 +31,14 @@
                         </div>                        
                     </div>
                     <div class="portlet-body form">
-                        {!! Form::open(array('route' => 'api.v1.person.store', 'method' => 'POST', 'class'=>'form-horizontal ', 'id'=>'person_form')) !!}                        
+                        {!! Form::open(array('route' => array('api.v1.person.update', $data['id']), 'method' => 'PUT', 'class'=>'form-horizontal ', 'id'=>'person_form')) !!}                        
                         <div class="form-wizard">
                             <div class="form-body">
                                 <h3 class="block">Provide user details</h3>
                                 <div class="form-group">
                                     {!! HTML::decode(Form::label('name', 'Name<span class="required"> * </span>', array('class' => 'control-label col-md-3'))) !!}
                                     <div class="col-md-4">
-                                        {!! Form::text('name', '', array('class'=>'form-control')) !!}                                                    
+                                        {!! Form::text('name', $data['name'], array('class'=>'form-control')) !!}                                                    
                                         <span class="help-block">
                                             Write name of the user. </span>
                                     </div>
@@ -46,19 +46,19 @@
                                 <div class="form-group">
                                     {!! HTML::decode(Form::label('first_name', 'First Name<span class="required"> * </span>', array('class' => 'control-label col-md-3'))) !!}
                                     <div class="col-md-4">
-                                        {!! Form::text('first_name', '', array('class'=>'form-control')) !!}                                                                                            
+                                        {!! Form::text('first_name', $data['first_name'], array('class'=>'form-control')) !!}                                                                                            
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('last_name', 'Last Name', array('class' => 'control-label col-md-3')) !!}
                                     <div class="col-md-4">
-                                        {!! Form::text('last_name', '', array('class'=>'form-control')) !!}                                                                                            
+                                        {!! Form::text('last_name', $data['last_name'], array('class'=>'form-control')) !!}                                                                                            
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('username', 'Username', array('class' => 'control-label col-md-3')) !!}
                                     <div class="col-md-4">
-                                        {!! Form::text('username', '', array('class'=>'form-control')) !!}                                                                                            
+                                        {!! Form::text('username', $data['user']->username, array('class'=>'form-control', 'readonly'=>'true')) !!}                                                                                            
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -66,7 +66,8 @@
                                             * </span>
                                     </label>
                                     <div class="col-md-4">
-                                        <input type="password" class="form-control" name="password" id="submit_form_password"/>
+                                        <input type="text" style="display:none;">
+                                        <input type="password" class="form-control" name="password" id="submit_form_password" autocomplete="off" value=""/>
                                         <span class="help-block">
                                             Provide your password. </span>
                                     </div>
@@ -76,7 +77,7 @@
                                             * </span>
                                     </label>
                                     <div class="col-md-4">
-                                        <input type="password" class="form-control" name="rpassword"/>
+                                        <input type="password" class="form-control" name="rpassword" value="" autocomplete="false"/>
                                         <span class="help-block">
                                             Confirm your password </span>
                                     </div>
@@ -93,14 +94,14 @@
                                 <div class="form-group">
                                     {!! Form::label('address', 'Address', array('class' => 'control-label col-md-3')) !!}
                                     <div class="col-md-4">
-                                        {!! Form::text('address', '', array('class'=>'form-control')) !!}                                                                                            
+                                        {!! Form::text('address', $data['address'], array('class'=>'form-control')) !!}                                                                                            
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('city', 'City', array('class' => 'col-md-3 control-label')) !!}
 
                                     <div class="col-md-4">
-                                        {!! Form::text('city', '', array('id'=>'city_list', 'class'=>'form-control')) !!}                                                                                             
+                                        {!! Form::text('city', $data['city'].", ".$data['country'], array('id'=>'city_list', 'class'=>'form-control')) !!}                                                                                             
                                         <span class="help-block">
                                             Type name of the city. </span>
                                     </div>
@@ -108,31 +109,32 @@
                                 <div class="form-group">
                                     {!! Form::label('contact_number', 'Contact Number', array('class' => 'control-label col-md-3')) !!}
                                     <div class="col-md-4">
-                                        {!! Form::text('contact_number', '', array('class'=>'form-control')) !!}                                                                                            
+                                        {!! Form::text('contact_number', $data['contact_number'], array('class'=>'form-control')) !!}                                                                                            
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('email', 'Email', array('class' => 'control-label col-md-3')) !!}
                                     <div class="col-md-4">
-                                        {!! Form::text('email', '', array('class'=>'form-control')) !!}                                                                                            
+                                        {!! Form::text('email', $data['email'], array('class'=>'form-control')) !!}                                                                                            
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('link', 'Link:', array('class' => 'col-md-3 control-label')) !!}
+                                    {!! Form::label('link', 'Profile:', array('class' => 'col-md-3 control-label')) !!}
                                     <div class="col-md-8">
                                         <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-link"></i>
-                                            </span>
-                                            {!! Form::text('link', '', array('class'=>'form-control col-md-3')) !!}
+                                            
                                             <span class="input-group-addon">
                                                 <i class="fa fa-facebook"></i>
                                             </span>
-                                            {!! Form::text('facebook', '', array('class'=>'form-control col-md-3')) !!}
+                                            {!! Form::text('facebook', $data['facebook'], array('class'=>'form-control col-md-3')) !!}
                                             <span class="input-group-addon">
                                                 <i class="fa fa-twitter"></i>
                                             </span>
-                                            {!! Form::text('twitter', '', array('class'=>'form-control col-md-3')) !!}
+                                            {!! Form::text('twitter', $data['twitter'], array('class'=>'form-control col-md-3')) !!}
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-google-plus"></i>
+                                            </span>
+                                            {!! Form::text('gplus', $data['gplus'], array('class'=>'form-control col-md-3')) !!}
 
                                         </div>
                                         <span class="help-block">
@@ -142,7 +144,7 @@
                                 <div class="form-group">
                                     {!! Form::label('short_text', 'Comments', array('class' => 'col-md-3 control-label')) !!}                                            
                                     <div class="col-md-8">
-                                        {!! Form::textarea('short_text', '', array('id'=> 'short_text', 'class'=>'form-control ckeditor', 'rows'=>'2')) !!}
+                                        {!! Form::textarea('short_text', $data['short_text'], array('id'=> 'short_text', 'class'=>'form-control ckeditor', 'rows'=>'2')) !!}
                                         <span class="help-block">
                                             Write a description of the festival. Ex. Guests, performers, contents, timetable, environment, city etc. </span>
                                     </div>

@@ -1,6 +1,7 @@
 @extends('layout.master')
 
 @section('content')
+
 <div class="page-content">
     <div class="container">
         <!-- BEGIN PAGE BREADCRUMB -->
@@ -9,11 +10,11 @@
                 <a href="{{url('/')}}">Home</a><i class="fa fa-circle"></i>
             </li>
             <li>
-                <a href="#">Festival</a>
+                <a href="{!! route('person') !!}">User Management</a>
                 <i class="fa fa-circle"></i>
             </li>            
             <li class="active">
-                Festival list
+                User list
             </li>
         </ul>
         <!-- END PAGE BREADCRUMB -->
@@ -25,142 +26,48 @@
                     <div class="portlet-title">
                         <div class="caption">
                             <i class="fa fa-gift font-green-sharp"></i>
-                            <span class="caption-subject font-green-sharp bold uppercase">Festival List</span>
-                            <span class="caption-helper">all festivals...</span>
-                        </div>
-                        <div class="actions">
-                            <a href="javascript:;" class="btn btn-default btn-circle">
-                                <i class="fa fa-plus"></i>
-                                <span class="hidden-480">
-                                    New Order </span>
-                            </a>
-                            <div class="btn-group">
-                                <a class="btn btn-default btn-circle" href="javascript:;" data-toggle="dropdown">
-                                    <i class="fa fa-share"></i>
-                                    <span class="hidden-480">
-                                        Tools </span>
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="javascript:;">
-                                            Export to Excel </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            Export to CSV </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            Export to XML </a>
-                                    </li>
-                                    <li class="divider">
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            Print Invoices </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <span class="caption-subject font-green-sharp bold uppercase">User List</span>
+                            <span class="caption-helper">all users...</span>
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <div class="table-container table-scrollable">
-                            <div class="table-actions-wrapper">
-                                <span>
-                                </span>
-                                <select class="table-group-action-input form-control input-inline input-small input-sm">
-                                    <option value="">Select...</option>
-                                    <option value="Cancel">Cancel</option>
-                                    <option value="Cancel">Hold</option>
-                                    <option value="Cancel">On Hold</option>
-                                    <option value="Close">Close</option>
-                                </select>
-                                <button class="btn btn-sm yellow table-group-action-submit"><i class="fa fa-check"></i> Submit</button>
-                            </div>
+                        <div class="table-container table-scrollable">                            
                             <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                 <thead>
                                     <tr role="row" class="heading">
-                                        <th width="2%">
-                                            <input type="checkbox" class="group-checkable">
-                                        </th>
                                         <th width="5%">
-                                            Name
-                                        </th>
-                                        <th width="15%">
-                                            Start date
-                                        </th>
-                                        <th width="15%">
-                                            End date
+                                            Username
                                         </th>
                                         <th width="10%">
-                                            City
+                                            Full Name
                                         </th>
                                         <th width="10%">
-                                            Description
+                                            User since
+                                        </th>
+                                        <th width="15%">
+                                            Short text
+                                        </th>
+                                        <th width="10%">
+                                            Position
+                                        </th>
+                                        <th width="15%">
+                                            Address
+                                        </th>
+                                        <th width="10%">
+                                            City, Country
+                                        </th>
+                                        <th width="10%">
+                                            Phone
                                         </th>
 
                                         <th width="10%">
-                                            Budget
+                                            Email
                                         </th>
                                         <th width="10%">
-                                            Created On
+                                            Public Profile
                                         </th>
-                                    </tr>
-                                    <!--<tr role="row" class="filter">
-                                        <td>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control form-filter input-sm" name="order_id">
-                                        </td>
-                                        <td>
-                                            <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
-                                                <input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-                                                </span>
-                                            </div>
-                                            <div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
-                                                <input type="text" class="form-control form-filter input-sm" readonly name="order_date_to" placeholder="To">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control form-filter input-sm" name="order_customer_name">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control form-filter input-sm" name="order_ship_to">
-                                        </td>
-                                        <td>
-                                            <div class="margin-bottom-5">
-                                                <input type="text" class="form-control form-filter input-sm" name="order_price_from" placeholder="From"/>
-                                            </div>
-                                            <input type="text" class="form-control form-filter input-sm" name="order_price_to" placeholder="To"/>
-                                        </td>
-                                        <td>
-                                            <div class="margin-bottom-5">
-                                                <input type="text" class="form-control form-filter input-sm margin-bottom-5 clearfix" name="order_quantity_from" placeholder="From"/>
-                                            </div>
-                                            <input type="text" class="form-control form-filter input-sm" name="order_quantity_to" placeholder="To"/>
-                                        </td>
-                                        <td>
-                                            <select name="order_status" class="form-control form-filter input-sm">
-                                                <option value="">Select...</option>
-                                                <option value="pending">Pending</option>
-                                                <option value="closed">Closed</option>
-                                                <option value="hold">On Hold</option>
-                                                <option value="fraud">Fraud</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="margin-bottom-5">
-                                                <button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Search</button>
-                                            </div>
-                                            <button class="btn btn-sm red filter-cancel"><i class="fa fa-times"></i> Reset</button>
-                                        </td>
-                                    </tr>-->
+                                        <th></th>
+                                    </tr>                                    
                                 </thead>
                                 <tbody>
                                 </tbody>
@@ -175,4 +82,57 @@
     </div>
 </div>
 
+@stop
+
+@section('js')
+{!! HTML::script('assets/global/plugins/select2/select2.min.js'); !!}
+{!! HTML::script('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js'); !!}
+{!! HTML::script('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js'); !!}
+{!! HTML::script('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js'); !!}
+{!! HTML::script('assets/global/scripts/datatable.js'); !!}
+{!! HTML::script('assets/admin/pages/scripts/table-ajax.js'); !!}
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $.getJSON("http://localhost:9090/banglafest/api/v1/person", function(json) {
+            $('#datatable_ajax').dataTable({
+                sDom: '<"top"if>rt<"bottom"lp><"clear">',
+                //ajax: "http://localhost:9090/banglafest/logs",
+                aaData: json,
+                sPaginationType: "full_numbers",
+                "order": [[ 2, "asc" ]],
+                aoColumns: [
+                    {mDataProp: "username"},
+                    {mDataProp: "name"},
+                    {mDataProp: "created_at.date"},
+                    {mDataProp: "short_text"},
+                    {mDataProp: "position"},
+                    {mDataProp: "address"},
+                    {mDataProp: "city"},
+                    {mDataProp: "contact_number"},
+                    {mDataProp: "email"},
+                    {mDataProp: null, sortable: false,
+                        "mRender": function(o) {
+                            var final = '<div class="portlet-body util-btn-margin-bottom-5">';
+                            if (o.facebook !== "") {
+                                final = final + '<a href="http://www.facebook.com/' + o.facebook + '" data-original-title="facebook" class="social-icon facebook"></a>';
+                            }
+                            if (o.twitter !== "") {
+                                final = final + '<a href="http://www.twitter.com/' + o.twitter + '" data-original-title="twitter" class="social-icon twitter"></a>';
+                            }
+                            if (o.gplus !== "") {
+                                final = final + '<a href="https://plus.google.com/+' + o.gplus + '" data-original-title="Goole Plus" class="social-icon googleplus"></a>';
+                            }
+                            final = final + '</div>';                            
+                            return final;
+                        }
+                    },
+                    {mDataProp: null, sortable: false,
+                        "mRender": function(o) {
+                            return '<a href="p_edit/' + o.id + '" class="btn default btn-xs purple"><i class="fa fa-edit"></i> Edit </a><a href="p_delete/' + o.id + '" class="btn default btn-xs red"><i class="fa fa-trash"></i> Delete </a>'
+                        }
+                    }
+                ]
+            });
+        });
+    });</script>
 @stop

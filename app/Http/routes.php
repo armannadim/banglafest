@@ -134,10 +134,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function() {
     /* END Associations */
 
     /* Person */
-    Route::get('person', array('as' => 'person', 'uses' => 'PersonController@index'));
-    Route::get('p_create', array('as' => 'p_create', 'uses' => 'PersonController@create'));
+    Route::get('person', array('as' => 'person', 'uses' => 'BackendController@p_index'));
+    Route::get('p_create', array('as' => 'p_create', 'uses' => 'BackendController@p_create'));
     Route::post('p_store', array('as' => 'p_store', 'uses' => 'PersonController@store'));
-    Route::get('p_edit', array('as' => 'p_edit', 'uses' => 'PersonController@edit'));
+    Route::get('p_edit/{id?}', array('as' => 'p_edit', 'uses' => 'PersonController@edit'));
     Route::post('p_update', array('as' => 'p_update', 'uses' => 'PersonController@update'));
     Route::post('p_delete', array('as' => 'p_delete', 'uses' => 'PersonController@delete'));
     /* END Multimedia */
@@ -152,6 +152,7 @@ Route::get('getAssociation/{id}', array('as' => 'getAssociation', 'uses' => 'Bac
 Route::get('getPerson/{id}', array('as' => 'getPerson', 'uses' => 'BackendController@getPerson'));
 Route::get('getGuest/{id}', array('as' => 'getGuest', 'uses' => 'BackendController@getGuest'));
 Route::get('getPerformer/{id}', array('as' => 'getPerformer', 'uses' => 'BackendController@getPerformer'));
+Route::get('getRoles', array('as' => 'getRoles', 'uses' => 'BackendController@getRoles'));
 
 
 

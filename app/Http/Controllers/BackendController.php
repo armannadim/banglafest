@@ -135,7 +135,7 @@ class BackendController extends Controller {
         $data['title'] = "User";
         $data['sub_title'] = "User details";
         $data['role'] = $this->getRole(Auth::user()->id);
-        return view('person.person', $data);
+        return view('person.persons', $data);
     }
 
     public function p_create() {
@@ -321,7 +321,7 @@ class BackendController extends Controller {
             $response = [];
             $statusCode = 200;
             //$city = City::all();
-            
+
             $id = Request::segment(2);
 
 
@@ -342,15 +342,15 @@ class BackendController extends Controller {
             return Response::json($response, $statusCode);
         }
     }
-    
+
     public function getGuest() {
         try {
             $response = [];
             $statusCode = 200;
             $guest = Guest::all();
-            
-            
-            
+
+
+
             foreach ($guest as $a) {
                 $response[] = [
                     'id' => $a->id,
@@ -363,15 +363,15 @@ class BackendController extends Controller {
             return Response::json($response, $statusCode);
         }
     }
-    
+
     public function getPerformer() {
         try {
             $response = [];
             $statusCode = 200;
             $performer = Performer::all();
-            
-            
-            
+
+
+
             foreach ($performer as $a) {
                 $response[] = [
                     'id' => $a->id,
@@ -385,7 +385,29 @@ class BackendController extends Controller {
         }
     }
 
-    public function RemoveSchedule($id_activity){
+    public function getRoles() {
+        try {
+            $response = [];
+            $statusCode = 200;
+            $guest = \App\Models\Role::all();
+
+
+
+            foreach ($guest as $a) {
+                $response[] = [
+                    'id' => $a->id,
+                    'value' => $a->role
+                ];
+            }
+        } catch (Exception $e) {
+            $statusCode = 404;
+        } finally {
+            return Response::json($response, $statusCode);
+        }
+    }
+
+    public function RemoveSchedule($id_activity) {
         \App\Models\FestivalActivities::where("id_activity", "=", $id_activity)->delete();
     }
+
 }
