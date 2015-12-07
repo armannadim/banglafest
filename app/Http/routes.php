@@ -22,8 +22,8 @@ Route::get('team', array('as' => 'team', 'uses' => 'FrontendController@team'));
 Route::get('services', array('as' => 'services', 'uses' => 'FrontendController@services'));
 Route::get('sponsors', array('as' => 'sponsors', 'uses' => 'FrontendController@sponsors'));
 Route::get('live', array('as' => 'live', 'uses' => 'FrontendController@live'));
-Route::get('allEvents', array('as' => 'allEvents', 'uses' => 'FrontendController@allEvents'));
-Route::get('pastEvents', array('as' => 'pastEvents', 'uses' => 'FrontendController@pastEvents'));
+Route::get('all-events', array('as' => 'all-events', 'uses' => 'FrontendController@allEvents'));
+Route::get('past-events', array('as' => 'past-events', 'uses' => 'FrontendController@pastEvents'));
 Route::get('calendar', array('as' => 'calendar', 'uses' => 'FrontendController@calendar'));
 Route::get('event/{id?}', array('as' => 'event', 'uses' => 'FrontendController@event'));
 

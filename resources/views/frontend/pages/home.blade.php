@@ -149,9 +149,9 @@
 
                 <div class="col-lg-5">
                     <div class="heading-block topmargin">
-                        <h1>Welcome to Canvas.<br>MultiPurpose Template.</h1>
+                        <h1>Welcome to <br>BanglaFest.</h1>
                     </div>
-                    <p class="lead">Create a website that you are gonna be proud of. Be it Business, Portfolio, Agency, Photography, eCommerce &amp; much more.</p>
+                    <p class="lead">Bring activities of Bangladeshi cultural activies organized by different associations around the world.</p>
                 </div>
 
                 <div class="col-lg-7">
@@ -174,28 +174,28 @@
                     <div class="col-md-4 bottommargin">
                         <i class="i-plain color i-large icon-line2-screen-desktop inline-block" style="margin-bottom: 15px;"></i>
                         <div class="heading-block nobottomborder" style="margin-bottom: 15px;">
-                            <span class="before-heading">Scalable on Devices.</span>
-                            <h4>Responsive &amp; Retina</h4>
+                            <span class="before-heading">Bengali New year.</span>
+                            <h4>Pohela Boishakh</h4>
                         </div>
-                        <p>Employment respond committed meaningful fight against oppression social challenges rural legal aid governance. Meaningful work, implementation, process cooperation, campaign inspire.</p>
+                        <p>More colorfull festival of Bangali's are new year celebration. Every bangali loves to celebrate it in a colorfull way. We enjoy it very much. All the Bengali who lives abroad don't forget to celebrate this festival every year.</p>
                     </div>
 
                     <div class="col-md-4 bottommargin">
                         <i class="i-plain color i-large icon-line2-energy inline-block" style="margin-bottom: 15px;"></i>
                         <div class="heading-block nobottomborder" style="margin-bottom: 15px;">
-                            <span class="before-heading">Smartly Coded &amp; Maintained.</span>
-                            <h4>Powerful Performance</h4>
+                            <span class="before-heading">National days.</span>
+                            <h4>Celebration of national days</h4>
                         </div>
-                        <p>Medecins du Monde Jane Addams reduce child mortality challenges Ford Foundation. Diversification shifting landscape advocate pathway to a better life rights international. Assessment.</p>
+                        <p>Like all other countries, Bangladesh also has few national days. Independence day, Victory day, Martyrs day etc. In addition from year 2000 Martyrs day are also celebrates as International Mother Language Day.</p>
                     </div>
 
                     <div class="col-md-4 bottommargin">
                         <i class="i-plain color i-large icon-line2-equalizer inline-block" style="margin-bottom: 15px;"></i>
                         <div class="heading-block nobottomborder" style="margin-bottom: 15px;">
-                            <span class="before-heading">Flexible &amp; Customizable.</span>
-                            <h4>Truly Multi-Purpose</h4>
+                            <span class="before-heading">Other festivals.</span>
+                            <h4>Loves to celebrate</h4>
                         </div>
-                        <p>Democracy inspire breakthroughs, Rosa Parks; inspiration raise awareness natural resources. Governance impact; transformative donation philanthropy, respect reproductive.</p>
+                        <p>We love to organize festivals. Other than national days and new year celebration we've more reason to celebrate. Two Eid celebration, birthday of our national poet Kazi Nazrul Islam and National anthem writer Robindronath Tagore etc.</p>
                     </div>
 
                 </div>
@@ -203,7 +203,7 @@
             </div>
         </div>
 
-        <div class="container clearfix">
+        <!--<div class="container clearfix">
 
             <div class="row topmargin-lg bottommargin-sm">
 
@@ -299,7 +299,7 @@
                 </div>
             </div>
 
-        </div>
+        </div>-->
 
         <div class="row clearfix bottommargin-lg common-height">
 
@@ -440,7 +440,7 @@
         <div class="section topmargin nobottommargin nobottomborder">
             <div class="container clearfix">
                 <div class="heading-block center nomargin">
-                    <h3>Our Latest Works</h3>
+                    <h3>Some previous events</h3>
                 </div>
             </div>
         </div>
@@ -618,7 +618,7 @@
             </div>
         </a>
 
-        <div class="container clearfix">
+        <!--<div class="container clearfix">
 
             <div class="col_one_third bottommargin-sm center">
                 <img data-animate="fadeInLeft" src="images/services/iphone6.png" alt="Iphone">
@@ -638,12 +638,12 @@
 
             </div>
 
-        </div>
+        </div>-->
 
         <div class="section parallax dark nobottommargin" style="background-image: url('images/services/home-testi-bg.jpg'); padding: 100px 0;" data-stellar-background-ratio="0.4">
 
             <div class="heading-block center">
-                <h3>What Clients Say?</h3>
+                <h3>What People Say?</h3>
             </div>
 
             <div class="fslider testimonial testimonial-full" data-animation="fade" data-arrows="false">
@@ -691,7 +691,7 @@
 
         </div>
 
-        <div class="section notopmargin notopborder">
+        <!--<div class="section notopmargin notopborder">
             <div class="container clearfix">
                 <div class="heading-block center nomargin">
                     <h3>Latest from the Blog</h3>
@@ -775,7 +775,7 @@
                 </div>
 
             </div>
-        </div>
+        </div>-->
 
         <div class="section">
             <div class="container clearfix">
@@ -891,7 +891,7 @@
             </div>
         </div>
 
-        <div class="container clearfix">
+        <!--<div class="container clearfix">
 
             <div id="oc-clients" class="owl-carousel image-carousel">
 
@@ -934,7 +934,7 @@
 
             </script>
 
-        </div>
+        </div>-->
 
     </div>
 

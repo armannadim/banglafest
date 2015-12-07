@@ -92,11 +92,12 @@
 {!! HTML::script('assets/global/scripts/datatable.js'); !!}
 {!! HTML::script('assets/admin/pages/scripts/table-ajax.js'); !!}
 <script type="text/javascript">
+    
     jQuery(document).ready(function() {
-        $.getJSON("http://localhost:9090/banglafest/api/v1/person", function(json) {
+        $.getJSON("{!! url('/') !!}/api/v1/person", function(json) {
             $('#datatable_ajax').dataTable({
                 sDom: '<"top"if>rt<"bottom"lp><"clear">',
-                //ajax: "http://localhost:9090/banglafest/logs",
+                //ajax: "{!! url('/') !!}/logs",
                 aaData: json,
                 sPaginationType: "full_numbers",
                 "order": [[ 2, "asc" ]],

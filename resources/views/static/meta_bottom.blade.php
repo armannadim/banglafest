@@ -52,10 +52,10 @@
 {!! HTML::script('assets/admin/pages/scripts/table-ajax.js'); !!}
 <script type="text/javascript">
     jQuery(document).ready(function() {
-        $.getJSON("http://localhost:9090/banglafest/api/v1/festival", function(json) {
+        $.getJSON("{!! url('/') !!}/api/v1/festival", function(json) {
             $('#datatable_ajax').dataTable({
                 sDom: '<"top"if>rt<"bottom"lp><"clear">',
-                //ajax: "http://localhost:9090/banglafest/logs",
+                //ajax: "{!! url('/') !!}/logs",
                 aaData: json,
                 sPaginationType: "full_numbers",                
                 aoColumns: [
@@ -91,7 +91,7 @@
         var select = $('#country_list');
         //request the JSON data and parse into the select element
         /*$.ajax({
-         url: 'http://localhost:9090/banglafest/getCountry',
+         url: '{!! url('/') !!}/getCountry',
          dataType: 'JSON',
          success: function(data) {
          //clear the current content of the select
@@ -117,7 +117,7 @@
          
          //request the JSON data and parse into the select element
          $.ajax({
-         url: 'http://localhost:9090/banglafest/getCity/' + $(this).val(),
+         url: '{!! url('/') !!}/getCity/' + $(this).val(),
          dataType: 'JSON',
          success: function(data) {
          //clear the current content of the select

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Activity_log extends Model {
+class Acccess_log extends Model {
 
     protected $table = 'access_log';
     public $timestamps = true;

@@ -40,10 +40,10 @@
         </style>
         <script type="text/javascript">
             $(document).ready(function() {
-                $.getJSON("http://localhost:9090/banglafest/logs", function(json) {
+                $.getJSON("{!! url('/') !!}/logs", function(json) {
                     $('#log').dataTable({
                         sDom: '<"top"if>rt<"bottom"lp><"clear">',
-                        //ajax: "http://localhost:9090/banglafest/logs",
+                        //ajax: "{!! url('/') !!}/logs",
                         aaData: json,
                         aoColumns: [
                             {mDataProp: "id", sortable: false},

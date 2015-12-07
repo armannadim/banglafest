@@ -38,7 +38,7 @@
                         </ul>
                         <div class="entry-content">
                             <div ng-bind-html="event.description"></div>
-                            <a href="http://localhost:9090/banglafest/event/[[event.id]]" class="btn btn-danger">Read More</a>
+                            <a href="{!! url('/') !!}/event/[[event.id]]" class="btn btn-danger">Read More</a>
                         </div>
                     </div>
                 </div>

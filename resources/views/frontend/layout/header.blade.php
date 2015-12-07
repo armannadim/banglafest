@@ -30,11 +30,11 @@
                     </li>-->
                     <li class="{{Request::path()=='aboutus'?'current':''}}"><a href="{!! url('team') !!}"><div>About us</div></a></li>
                     <li class="{{Request::path()=='live'?'current':''}}"><a href="{!! url('live') !!}"><div>Live videos</div></a></li>
-                    <!--<li class="{{Request::path()=='allEvents'?'current':''}}"><a href="{!! url('allEvents') !!}"><div>Events</div></a></li>-->
-                    <li class="{{(Request::path()=='calendar')||(Request::path()=='allEvents')||(Request::path()=='past')?'current':''}}"><a href="{!! url('allEvents') !!}"><div>Events</div></a>
+                    <!--<li class="{{Request::path()=='all-events'?'current':''}}"><a href="{!! url('all-events') !!}"><div>Events</div></a></li>-->
+                    <li class="{{(Request::path()=='calendar')||(Request::path()=='all-events')||(Request::path()=='past')?'current':''}}"><a href="{!! url('all-events') !!}"><div>Events</div></a>
                         <ul>
                             <li><a href="{!! url('calendar') !!}"><div><i class="icon-stack"></i>Calendar</div></a></li>
-                            <li><a href="{!! url('pastEvents') !!}"><div><i class="icon-stack"></i>Past events</div></a></li>
+                            <li><a href="{!! url('past-events') !!}"><div><i class="icon-stack"></i>Past events</div></a></li>
                         </ul>
                     </li>
                     <li class="{{Request::path()=='contact'?'current':''}}"><a href="{!! url('contact') !!}"><div>Contact us</div></a></li>
